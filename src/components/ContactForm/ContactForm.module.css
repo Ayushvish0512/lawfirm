@@ -1,0 +1,60 @@
+.formContainer {
+  background-color: var(--color-surface);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  max-width: 600px;
+  width: 100%;
+  margin: var(--space-6) auto;
+  border: 1px solid var(--color-border);
+}
+
+.whatsappNote {
+  margin-bottom: var(--space-4);
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+}
+
+.formGroup {
+  margin-bottom: var(--space-4);
+}
+
+.label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.input, .textarea {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-primary);
+}
+
+.textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.phoneWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding-left: var(--space-3);
+  background: var(--color-background);
+}
+
+.phonePrefix {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  margin-right: var(--space-2);
+}
+
+.phoneInput {
+  border: none;
+  flex: 1;
+  padding: var(--space-3) 0;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header } from './components/Header/Header';
+import { Chatbox } from './components/Chatbox/Chatbox';
 import { Footer } from './components/Footer/Footer';
 import { Maintenance } from './components/Maintenance/Maintenance';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -29,6 +30,7 @@ function App() {
         <Route path="/contact" element={<Maintenance />} />
       </Routes>
       <Footer />
+      <Chatbox />
     </BrowserRouter>
   );
 }
