@@ -1,0 +1,47 @@
+.chatboxContainer {
+  position: fixed;
+  bottom: var(--space-4);
+  left: var(--space-4);
+  z-index: var(--z-modal);
+}
+
+.chatButton {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+.chatForm {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 0;
+  width: 300px;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+}
+
+.inputField {
+  width: 100%;
+  padding: var(--space-2);
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.submitButton {
+  width: 100%;
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding: var(--space-2);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
