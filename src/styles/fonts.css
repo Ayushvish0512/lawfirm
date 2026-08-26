@@ -1,0 +1,49 @@
+/*
+ * Taouma Font
+ * -----------
+ * Place your .woff2 / .woff font files in:
+ *   src/assets/fonts/Taouma/
+ *
+ * Expected files:
+ *   Taouma-Regular.woff2
+ *   Taouma-Medium.woff2
+ *   Taouma-SemiBold.woff2
+ *   Taouma-Bold.woff2
+ *
+ * Once files are available, uncomment the @font-face blocks below
+ * and update --font-primary in tokens.css to 'Taouma'.
+ */
+
+/*
+@font-face {
+  font-family: 'Taouma';
+  src: url('../assets/fonts/Taouma/Taouma-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Taouma';
+  src: url('../assets/fonts/Taouma/Taouma-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Taouma';
+  src: url('../assets/fonts/Taouma/Taouma-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Taouma';
+  src: url('../assets/fonts/Taouma/Taouma-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
