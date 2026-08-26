@@ -1,0 +1,135 @@
+.footer {
+  background-color: var(--color-primary);
+  color: rgba(255, 255, 255, 0.8);
+  padding-top: var(--space-10);
+  padding-bottom: var(--space-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-8);
+  margin-bottom: var(--space-9);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+.brandInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.logoLink {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-serif);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-inverse);
+}
+
+.logoDot {
+  color: var(--color-accent);
+}
+
+.brandDesc {
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 320px;
+  line-height: var(--line-height-relaxed);
+  font-size: var(--font-size-sm);
+}
+
+.linksGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.groupTitle {
+  color: var(--color-text-inverse);
+  font-family: var(--font-serif);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  position: relative;
+  padding-bottom: var(--space-2);
+}
+
+.groupTitle::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: var(--color-accent);
+}
+
+.linksList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.link {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.7);
+  transition: color var(--transition-normal);
+}
+
+.link:hover {
+  color: var(--color-accent);
+}
+
+.addressText,
+.contactText {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: var(--line-height-relaxed);
+}
+
+.contactText strong {
+  color: var(--color-text-inverse);
+}
+
+.bottomBar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: var(--space-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.copyright {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.legalLinks {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.bottomLink {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.5);
+  transition: color var(--transition-normal);
+}
+
+.bottomLink:hover {
+  color: var(--color-accent);
+}
+
+.divider {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: var(--font-size-xs);
+}
