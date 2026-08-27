@@ -151,7 +151,7 @@ export function Chatbox() {
           </form>
 
           <div className={styles.cbPowered}>
-            Powered by <span>LAIQA</span>
+            Powered by <span>Firmknp</span>
           </div>
         </div>
       )}
