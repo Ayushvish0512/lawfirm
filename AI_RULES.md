@@ -27,8 +27,8 @@ src/
 
 ## Typography
 
-- **Font "Taouma"**: Do NOT hallucinate font files, packages, or CDN links.
-  - If font files are not present in `src/assets/fonts/Taouma/`, use system fonts as fallback.
+- **Font "tahoma"**: Do NOT hallucinate font files, packages, or CDN links.
+  - If font files are not present in `src/assets/fonts/Tahoma/`, use system fonts as fallback.
   - Only uncomment `@font-face` in `fonts.css` when actual `.woff2` files are provided.
 - **Headings (h1-h6)**: Use `--font-serif` (Playfair Display).
 - **Body text**: Use `--font-primary` (Inter).
