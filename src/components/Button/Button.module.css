@@ -12,6 +12,7 @@
   transition: background-color var(--transition-normal), border-color var(--transition-normal), color var(--transition-normal), transform var(--transition-fast);
   text-decoration: none;
   white-space: nowrap;
+  max-width: 100%;
 }
 
 .button:active {
