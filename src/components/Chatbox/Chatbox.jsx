@@ -59,7 +59,7 @@ export function Chatbox() {
                 <p>Share your query and we'll get back to you shortly.</p>
                 <div className={styles.cbOnline}>
                   <span className={styles.cbOnlineDot} />
-                  We typically reply within minutes
+                  We typically reply within Hours
                 </div>
               </div>
             </div>
