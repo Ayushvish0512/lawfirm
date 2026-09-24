@@ -8,6 +8,7 @@ import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Services } from './pages/Services';
 import { Contact } from './pages/Contact';
+import { BookConsultation } from './pages/BookConsultation';
 import './styles/index.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/about2" element={<About />} />
         <Route path="/services2" element={<Services />} />
         <Route path="/contact2" element={<Contact />} />
+        <Route path="/book-consultation" element={<BookConsultation />} />
 
         {/* Public Routes (Maintenance Mode) */}
         <Route path="/" element={<Maintenance />} />
