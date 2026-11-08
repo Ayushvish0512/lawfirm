@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leadership Directory &amp; Name Frame Component</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            cream: {
+              50: '#FDFCF9',
+              100: '#F9F8F3',
+            },
+            brand: {
+              dark: '#111827',
+              gold: '#D97706',
+              accent: '#2563EB',
+            }
+          },
+          boxShadow: {
+            'subtle': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+            'elevated': '0 20px 40px -15px rgba(0, 0, 0, 0.07)',
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="custom-decorations">
+    /* Sparkle Border Frame Container */
+    .sparkle-frame-wrapper {
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    /* Subtle hover lifting effect */
+    .sparkle-frame-wrapper:hover .card-inner-content {
+      transform: translateY(-2px);
+    }
+
+    /* Editable Field Highlight on focus */
+    [contenteditable="true"]:hover {
+      outline: 1px dashed rgba(59, 130, 246, 0.4);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+    [contenteditable="true"]:focus {
+      outline: 2px solid #2563eb;
+      outline-offset: 3px;
+      border-radius: 3px;
+      background-color: rgba(239, 246, 255, 0.6);
+    }
+
+    /* Frame Border Theme Presets */
+    .frame-border-sparkle svg path,
+    .frame-border-sparkle svg circle {
+      stroke: currentColor;
+    }
+    .frame-border-minimal .sparkle-accent {
+      display: none;
+    }
+    .frame-border-glowing {
+      filter: drop-shadow(0 0 10px rgba(217, 119, 6, 0.35));
+    }
+  </style>
+<style data-purpose="print-and-export">
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: white !important;
+      }
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="bg-[#FAFAFC] text-slate-800 font-sans antialiased min-h-screen selection:bg-amber-100 selection:text-amber-900">
+<!-- BEGIN: Site Header -->
+<header class="border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-50 transition-all">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center shadow-md shadow-slate-900/10">
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24">
+<path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs uppercase tracking-widest font-semibold text-amber-700 block">Design System</span>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 font-serif">AuraFrame™ Leadership Suite</h1>
+</div>
+</div>
+<!-- Action Toolbar -->
+<div class="flex items-center space-x-3">
+<!-- Live Edit Indicator Toggle -->
+<button class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors shadow-sm" id="toggleEditModeBtn" title="Toggle quick inline text editing" type="button">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span>Edit Mode: <strong id="editModeStateText">ACTIVE</strong></span>
+</button>
+<button class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl text-sm font-medium shadow-sm transition-all hover:shadow active:scale-95" onclick="addNewMemberCard()">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Add Member</span>
+</button>
+<button class="hidden sm:inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-3.5 py-2 rounded-xl text-sm font-medium transition-colors shadow-sm" onclick="window.print()">
+<svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Print / PDF</span>
+</button>
+</div>
+</div>
+</header>
+<!-- END: Site Header -->
+<!-- BEGIN: Main Page Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+<!-- BEGIN: Component Hero & Controls Hub -->
+<section class="bg-gradient-to-br from-white to-slate-50 border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-subtle relative overflow-hidden">
+<div class="absolute -right-16 -top-16 w-80 h-80 bg-amber-50 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-7 space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-amber-100/70 text-amber-900 border border-amber-200">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
+            SVG Sparkle Outline Reference Motif
+          </div>
+<h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight font-serif leading-tight">
+            Distinguished Executive Name Frames
+          </h2>
+<p class="text-slate-600 leading-relaxed text-sm sm:text-base max-w-2xl">
+            A premium portrait framing component capturing the signature rounded rectangular border break decorated with 4-point constellation starbursts and accent dots. Fully customizable for leadership boards, summit speaker bios, and organizational directories.
+          </p>
+<!-- Interactive Control Ribbon -->
+<div class="pt-4 flex flex-wrap items-center gap-4 text-xs font-medium text-slate-600">
+<!-- Border Style Preset Selector -->
+<div class="flex items-center bg-white border border-slate-200 p-1 rounded-xl shadow-xs">
+<span class="px-2.5 text-slate-400 font-semibold uppercase tracking-wider text-[10px]">Theme</span>
+<button class="px-3 py-1.5 rounded-lg bg-slate-900 text-white transition-all" id="btn-theme-sparkle" onclick="setGlobalFrameTheme('sparkle')">Constellation</button>
+<button class="px-3 py-1.5 rounded-lg hover:bg-slate-100 text-slate-700 transition-all" id="btn-theme-glowing" onclick="setGlobalFrameTheme('glowing')">Gold Glow</button>
+<button class="px-3 py-1.5 rounded-lg hover:bg-slate-100 text-slate-700 transition-all" id="btn-theme-minimal" onclick="setGlobalFrameTheme('minimal')">Minimal</button>
+</div>
+<!-- Size Scale Selector -->
+<div class="flex items-center bg-white border border-slate-200 p-1 rounded-xl shadow-xs">
+<span class="px-2.5 text-slate-400 font-semibold uppercase tracking-wider text-[10px]">Size</span>
+<button class="px-3 py-1.5 rounded-lg bg-slate-900 text-white transition-all" id="btn-size-standard" onclick="setGlobalFrameScale('standard')">Standard</button>
+<button class="px-3 py-1.5 rounded-lg hover:bg-slate-100 text-slate-700 transition-all" id="btn-size-compact" onclick="setGlobalFrameScale('compact')">Compact</button>
+</div>
+<button class="text-slate-500 hover:text-slate-900 underline underline-offset-4 px-2 py-1" onclick="resetCardsToDefault()">
+              Reset Profiles
+            </button>
+</div>
+</div>
+<!-- Featured Reference Highlight Card -->
+<div class="lg:col-span-5 flex justify-center">
+<div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-elevated w-full max-w-sm text-center">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest block mb-3">Live Master Preview</span>
+<!-- MASTER COMPONENT DEMO -->
+<div class="relative mx-auto w-56 aspect-[3/4] flex items-center justify-center p-3">
+<!-- Reusable Frame SVG Overlay -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none text-slate-900" fill="none" preserveaspectratio="none" viewbox="0 0 300 424">
+<!-- Outer Path with broken segments -->
+<!-- Top-left around to top-right break -->
+<path d="M 260,82 L 260,50 C 260,25 240,10 215,10 L 65,10 C 40,10 20,25 20,50 L 20,250" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Bottom-left break around to bottom-right -->
+<path d="M 20,335 L 20,374 C 20,399 40,414 65,414 L 215,414 C 240,414 260,399 260,374 L 260,165" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- TOP RIGHT FLOURISH (STARBURST & DOTS) -->
+<g class="sparkle-accent text-slate-900 fill-current">
+<!-- Large 4-point star -->
+<path d="M 260,98 Q 260,108 270,108 Q 260,108 260,118 Q 260,108 250,108 Q 260,108 260,98 Z"></path>
+<!-- Small 4-point star -->
+<path d="M 260,126 Q 260,132 266,132 Q 260,132 260,138 Q 260,132 254,132 Q 260,132 260,126 Z"></path>
+<!-- Linear Accent Dots -->
+<circle cx="260" cy="120" r="2.5"></circle>
+<circle cx="260" cy="144" r="2.5"></circle>
+<!-- Outer parallel offset dots pair -->
+<circle cx="274" cy="122" r="4.2"></circle>
+<circle cx="274" cy="138" r="4.2"></circle>
+</g>
+<!-- BOTTOM LEFT FLOURISH (STARBURST & DOTS) -->
+<g class="sparkle-accent text-slate-900 fill-current">
+<!-- Large 4-point star -->
+<path d="M 20,300 Q 20,310 30,310 Q 20,310 20,320 Q 20,310 10,310 Q 20,310 20,300 Z"></path>
+<!-- Small 4-point star -->
+<path d="M 20,272 Q 20,278 26,278 Q 20,278 20,284 Q 20,278 14,278 Q 20,278 20,272 Z"></path>
+<!-- Linear Accent Dots -->
+<circle cx="20" cy="289" r="2.5"></circle>
+<circle cx="20" cy="265" r="2.5"></circle>
+<!-- Outer parallel offset dots pair -->
+<circle cx="6" cy="287" r="4.2"></circle>
+<circle cx="6" cy="303" r="4.2"></circle>
+</g>
+</svg>
+<!-- Inner Portrait Frame -->
+<div class="w-full h-full p-3 flex flex-col justify-end">
+<div class="relative w-full h-full rounded-[28px] overflow-hidden bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-3 shadow-inner">
+<img alt="Executive Preview" class="absolute inset-0 w-full h-full object-cover object-center -z-10 transition-transform duration-500 hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO_0KUBRUzSA54qlBPZbqG_p57CDNij-FpUwqiGUFCova8rUKnTKC3SJIqcnYjfF5ZUv-tzaRJ_5vunSB_KTK0BpBk-S3PWwZ0TUeOwRmdjo7j1_eaAPIFQzmZKKza3C6eLiv0dIwGGqj18ka7M9Q5MDls72AqBytnQlLLgOVAN-HbLI5X0uCwYmUlUhEGzOFhsyL2yZ7GVGya73k01KDrqzHpFCQVQA4sDOB9rMo"/>
+<div class="text-left text-white drop-shadow-md">
+<p class="text-xs font-bold leading-tight">Elena Rostova</p>
+<p class="text-[10px] text-slate-200">Global Strategy Lead</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between text-xs text-slate-500 px-3">
+<span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500"></span> 100% SVG Vector</span>
+<button class="text-blue-600 hover:text-blue-800 font-semibold hover:underline" onclick="copySvgCode()">Copy SVG Markup</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Component Hero & Controls Hub -->
+<!-- BEGIN: Executive Leadership Showcase Grid -->
+<section>
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-slate-200">
+<div>
+<span class="text-xs uppercase tracking-widest font-bold text-amber-700">Enterprise Showcase</span>
+<h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-serif">Executive Leadership Board</h2>
+<p class="text-sm text-slate-500 mt-1">Directly click on any text or photo to edit in real-time.</p>
+</div>
+<div class="mt-4 md:mt-0 flex items-center space-x-2 text-xs">
+<span class="text-slate-400">Displaying:</span>
+<span class="px-2 py-0.5 rounded bg-slate-200 text-slate-800 font-semibold" id="memberCountBadge">6 Members</span>
+</div>
+</div>
+<!-- Grid Container -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8" id="teamGridContainer">
+<!-- MEMBER CARD 1 -->
+<article class="sparkle-frame-wrapper group flex flex-col items-center text-center" data-purpose="team-member-card">
+<!-- Frame Image Outer Box -->
+<div class="frame-container relative w-64 sm:w-72 aspect-[3/4.2] flex items-center justify-center p-3 mb-4 transition-all">
+<!-- Decorative SVG Frame -->
+<svg class="frame-svg absolute inset-0 w-full h-full pointer-events-none text-slate-900 frame-border-sparkle" fill="none" preserveaspectratio="none" viewbox="0 0 300 424">
+<!-- Outline Path -->
+<path d="M 260,82 L 260,50 C 260,25 240,10 215,10 L 65,10 C 40,10 20,25 20,50 L 20,250" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<path d="M 20,335 L 20,374 C 20,399 40,414 65,414 L 215,414 C 240,414 260,399 260,374 L 260,165" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<!-- Sparkle Starburst Top-Right -->
+<g class="sparkle-accent fill-current">
+<path d="M 260,98 Q 260,108 270,108 Q 260,108 260,118 Q 260,108 250,108 Q 260,108 260,98 Z"></path>
+<path d="M 260,126 Q 260,132 266,132 Q 260,132 260,138 Q 260,132 254,132 Q 260,132 260,126 Z"></path>
+<circle cx="260" cy="120" r="2.5"></circle>
+<circle cx="260" cy="144" r="2.5"></circle>
+<circle cx="274" cy="122" r="4.2"></circle>
+<circle cx="274" cy="138" r="4.2"></circle>
+</g>
+<!-- Sparkle Starburst Bottom-Left -->
+<g class="sparkle-accent fill-current">
+<path d="M 20,300 Q 20,310 30,310 Q 20,310 20,320 Q 20,310 10,310 Q 20,310 20,300 Z"></path>
+<path d="M 20,272 Q 20,278 26,278 Q 20,278 20,284 Q 20,278 14,278 Q 20,278 20,272 Z"></path>
+<circle cx="20" cy="289" r="2.5"></circle>
+<circle cx="20" cy="265" r="2.5"></circle>
+<circle cx="6" cy="287" r="4.2"></circle>
+<circle cx="6" cy="303" r="4.2"></circle>
+</g>
+</svg>
+<!-- Portrait Wrapper with Pill/Smooth Rounded Corner Cut -->
+<div class="card-inner-content relative w-full h-full p-2.5 transition-transform duration-300">
+<div class="relative w-full h-full rounded-[30px] overflow-hidden bg-slate-100 shadow-sm border border-slate-100">
+<img alt="Kalyan Krishnamurthy" class="member-photo w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb2haKIWu4wYg42FtmAt52BEfC8Km4l9Q9YusCbHU1CH32AGkACfh0MlxQETwJHKQ3jc8s2YAwtx-6Pf-2m6a0pqEb9c0bPmvdLWsNXj6voI6ZvQBf8FYCgzEpqTBBapQwdpleYuCPXF49ENvJwgBUwTqesyXad4dqZkMvhMUavQqzclZYTFQHytLWDB_X2bcV4FrBXkqztf4zr0vUZrzSOC33pZuA7G3QMFO_6T4"/>
+<!-- Quick Avatar Swap Overlay (Visible on hover in Edit Mode) -->
+<button class="photo-change-btn absolute bottom-3 right-3 bg-black/75 hover:bg-black text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm shadow-md" onclick="promptPhotoUrl(this)" title="Change portrait URL">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<!-- Editorial Name and Metadata (contenteditable for rapid adjustments) -->
+<div class="w-full max-w-xs px-2 space-y-1.5">
+<h3 class="text-lg font-bold text-slate-900 tracking-tight cursor-text" contenteditable="true" spellcheck="false">
+              Kalyan Krishnamurthy
+            </h3>
+<p class="text-sm font-semibold text-slate-700 leading-snug cursor-text" contenteditable="true" spellcheck="false">
+              Chief Executive Officer
+            </p>
+<p class="text-xs text-slate-500 font-medium cursor-text" contenteditable="true" spellcheck="false">
+              Flipkart Group • Executive Board
+            </p>
+<!-- Social and Contact Badges -->
+<div class="pt-2 flex items-center justify-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600" contenteditable="true">
+                15+ Yrs Leadership
+              </span>
+<a class="text-slate-400 hover:text-blue-600 transition-colors p-1" href="#linkedin" title="LinkedIn Profile">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+<button class="card-delete-btn text-slate-300 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity" onclick="removeCard(this)" title="Remove Profile">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</article>
+<!-- MEMBER CARD 2 -->
+<article class="sparkle-frame-wrapper group flex flex-col items-center text-center" data-purpose="team-member-card">
+<div class="frame-container relative w-64 sm:w-72 aspect-[3/4.2] flex items-center justify-center p-3 mb-4 transition-all">
+<svg class="frame-svg absolute inset-0 w-full h-full pointer-events-none text-slate-900 frame-border-sparkle" fill="none" preserveaspectratio="none" viewbox="0 0 300 424">
+<path d="M 260,82 L 260,50 C 260,25 240,10 215,10 L 65,10 C 40,10 20,25 20,50 L 20,250" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<path d="M 20,335 L 20,374 C 20,399 40,414 65,414 L 215,414 C 240,414 260,399 260,374 L 260,165" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<g class="sparkle-accent fill-current">
+<path d="M 260,98 Q 260,108 270,108 Q 260,108 260,118 Q 260,108 250,108 Q 260,108 260,98 Z"></path>
+<path d="M 260,126 Q 260,132 266,132 Q 260,132 260,138 Q 260,132 254,132 Q 260,132 260,126 Z"></path>
+<circle cx="260" cy="120" r="2.5"></circle>
+<circle cx="260" cy="144" r="2.5"></circle>
+<circle cx="274" cy="122" r="4.2"></circle>
+<circle cx="274" cy="138" r="4.2"></circle>
+</g>
+<g class="sparkle-accent fill-current">
+<path d="M 20,300 Q 20,310 30,310 Q 20,310 20,320 Q 20,310 10,310 Q 20,310 20,300 Z"></path>
+<path d="M 20,272 Q 20,278 26,278 Q 20,278 20,284 Q 20,278 14,278 Q 20,278 20,272 Z"></path>
+<circle cx="20" cy="289" r="2.5"></circle>
+<circle cx="20" cy="265" r="2.5"></circle>
+<circle cx="6" cy="287" r="4.2"></circle>
+<circle cx="6" cy="303" r="4.2"></circle>
+</g>
+</svg>
+<div class="card-inner-content relative w-full h-full p-2.5 transition-transform duration-300">
+<div class="relative w-full h-full rounded-[30px] overflow-hidden bg-slate-100 shadow-sm border border-slate-100">
+<img alt="Rajneesh Kumar" class="member-photo w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNJztR3OajMnyvrqQwzuSO9Xsj5Zzw7fsh5pEaHbI4SMc9RloTLYONTmCTqYdWxiZofkXo5erFem4iTrhEFkYmV34kzt2GJxWmfFafyDZ-R8O8Xwv0P8GOKkJ0Chq-mgFKAYQWPwzyArni4EzNTgob9YRIJ2vcRW6uMR5C_SpmXmloahToa-nfLZ2QRZIWoLc-2qwHVYxkgiocl1tJqbbzsTwMShVE_9jD5PCms5c"/>
+<button class="photo-change-btn absolute bottom-3 right-3 bg-black/75 hover:bg-black text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm shadow-md" onclick="promptPhotoUrl(this)" title="Change portrait URL">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<div class="w-full max-w-xs px-2 space-y-1.5">
+<h3 class="text-lg font-bold text-slate-900 tracking-tight cursor-text" contenteditable="true" spellcheck="false">
+              Rajneesh Kumar
+            </h3>
+<p class="text-sm font-semibold text-slate-700 leading-snug cursor-text" contenteditable="true" spellcheck="false">
+              Chief Corporate Affairs Officer
+            </p>
+<p class="text-xs text-slate-500 font-medium cursor-text" contenteditable="true" spellcheck="false">
+              Public Policy &amp; Institutional Affairs
+            </p>
+<div class="pt-2 flex items-center justify-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600" contenteditable="true">
+                Corporate Governance
+              </span>
+<a class="text-slate-400 hover:text-blue-600 transition-colors p-1" href="#linkedin" title="LinkedIn Profile">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+<button class="card-delete-btn text-slate-300 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity" onclick="removeCard(this)" title="Remove Profile">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</article>
+<!-- MEMBER CARD 3 -->
+<article class="sparkle-frame-wrapper group flex flex-col items-center text-center" data-purpose="team-member-card">
+<div class="frame-container relative w-64 sm:w-72 aspect-[3/4.2] flex items-center justify-center p-3 mb-4 transition-all">
+<svg class="frame-svg absolute inset-0 w-full h-full pointer-events-none text-slate-900 frame-border-sparkle" fill="none" preserveaspectratio="none" viewbox="0 0 300 424">
+<path d="M 260,82 L 260,50 C 260,25 240,10 215,10 L 65,10 C 40,10 20,25 20,50 L 20,250" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<path d="M 20,335 L 20,374 C 20,399 40,414 65,414 L 215,414 C 240,414 260,399 260,374 L 260,165" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<g class="sparkle-accent fill-current">
+<path d="M 260,98 Q 260,108 270,108 Q 260,108 260,118 Q 260,108 250,108 Q 260,108 260,98 Z"></path>
+<path d="M 260,126 Q 260,132 266,132 Q 260,132 260,138 Q 260,132 254,132 Q 260,132 260,126 Z"></path>
+<circle cx="260" cy="120" r="2.5"></circle>
+<circle cx="260" cy="144" r="2.5"></circle>
+<circle cx="274" cy="122" r="4.2"></circle>
+<circle cx="274" cy="138" r="4.2"></circle>
+</g>
+<g class="sparkle-accent fill-current">
+<path d="M 20,300 Q 20,310 30,310 Q 20,310 20,320 Q 20,310 10,310 Q 20,310 20,300 Z"></path>
+<path d="M 20,272 Q 20,278 26,278 Q 20,278 20,284 Q 20,278 14,278 Q 20,278 20,272 Z"></path>
+<circle cx="20" cy="289" r="2.5"></circle>
+<circle cx="20" cy="265" r="2.5"></circle>
+<circle cx="6" cy="287" r="4.2"></circle>
+<circle cx="6" cy="303" r="4.2"></circle>
+</g>
+</svg>
+<div class="card-inner-content relative w-full h-full p-2.5 transition-transform duration-300">
+<div class="relative w-full h-full rounded-[30px] overflow-hidden bg-slate-100 shadow-sm border border-slate-100">
+<img alt="Ajay Yadav" class="member-photo w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKRw5KxY-TZM66uXrdROgFSytsow00eNnW1caQOkHwC0uW241ikpB-BNW8sk7uHbG55dD5hH2m4U2r9CF2wazrpMm3R8eMApdANRLUCTEcCyN_pWeZ6BdfVdRkJsPVPj2QvGC6sN6cjaXKliwZexZ35TjO_uUnwLVMpyu5L6u1r-sZBznxY1fNPIqxDScVYAQ_90jFnlEmGVxd3uL9T10DDS92FQDKQsjbOMRW0hY"/>
+<button class="photo-change-btn absolute bottom-3 right-3 bg-black/75 hover:bg-black text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm shadow-md" onclick="promptPhotoUrl(this)" title="Change portrait URL">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<div class="w-full max-w-xs px-2 space-y-1.5">
+<h3 class="text-lg font-bold text-slate-900 tracking-tight cursor-text" contenteditable="true" spellcheck="false">
+              Ajay Yadav
+            </h3>
+<p class="text-sm font-semibold text-slate-700 leading-snug cursor-text" contenteditable="true" spellcheck="false">
+              Senior Vice President • Hardlines
+            </p>
+<p class="text-xs text-slate-500 font-medium cursor-text" contenteditable="true" spellcheck="false">
+              Electronics, HealthPlus &amp; Mobile Operations
+            </p>
+<div class="pt-2 flex items-center justify-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600" contenteditable="true">
+                P&amp;L &amp; Scale
+              </span>
+<a class="text-slate-400 hover:text-blue-600 transition-colors p-1" href="#linkedin" title="LinkedIn Profile">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+<button class="card-delete-btn text-slate-300 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity" onclick="removeCard(this)" title="Remove Profile">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</article>
+<!-- MEMBER CARD 4 -->
+<article class="sparkle-frame-wrapper group flex flex-col items-center text-center" data-purpose="team-member-card">
+<div class="frame-container relative w-64 sm:w-72 aspect-[3/4.2] flex items-center justify-center p-3 mb-4 transition-all">
+<svg class="frame-svg absolute inset-0 w-full h-full pointer-events-none text-slate-900 frame-border-sparkle" fill="none" preserveaspectratio="none" viewbox="0 0 300 424">
+<path d="M 260,82 L 260,50 C 260,25 240,10 215,10 L 65,10 C 40,10 20,25 20,50 L 20,250" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<path d="M 20,335 L 20,374 C 20,399 40,414 65,414 L 215,414 C 240,414 260,399 260,374 L 260,165" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<g class="sparkle-accent fill-current">
+<path d="M 260,98 Q 260,108 270,108 Q 260,108 260,118 Q 260,108 250,108 Q 260,108 260,98 Z"></path>
+<path d="M 260,126 Q 260,132 266,132 Q 260,132 260,138 Q 260,132 254,132 Q 260,132 260,126 Z"></path>
+<circle cx="260" cy="120" r="2.5"></circle>
+<circle cx="260" cy="144" r="2.5"></circle>
+<circle cx="274" cy="122" r="4.2"></circle>
+<circle cx="274" cy="138" r="4.2"></circle>
+</g>
+<g class="sparkle-accent fill-current">
+<path d="M 20,300 Q 20,310 30,310 Q 20,310 20,320 Q 20,310 10,310 Q 20,310 20,300 Z"></path>
+<path d="M 20,272 Q 20,278 26,278 Q 20,278 20,284 Q 20,278 14,278 Q 20,278 20,272 Z"></path>
+<circle cx="20" cy="289" r="2.5"></circle>
+<circle cx="20" cy="265" r="2.5"></circle>
+<circle cx="6" cy="287" r="4.2"></circle>
+<circle cx="6" cy="303" r="4.2"></circle>
+</g>
+</svg>
+<div class="card-inner-content relative w-full h-full p-2.5 transition-transform duration-300">
+<div class="relative w-full h-full rounded-[30px] overflow-hidden bg-slate-100 shadow-sm border border-slate-100">
+<img alt="Seema Nair" class="member-photo w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDda8nzfd3Qz0j-EcRzSaqhdhJhIPczbcNwxYEoWNZeFOszTddnw83lyOPhgHjuUwij2bN9woAWHUt5cMHSOO3xTC273rYc8wXudTdalaMyITsR7JzL1s5nLFKGxM1JciALb8K7aS3reaT3meFkyp99DEzdJc4byVGIDAkHozaXI7meDw_ahSTcKqQ-AZIv49-GOLcfV_kbUV4qgiQtpi4VNOCEdJ9u8ThndPEgaA"/>
+<button class="photo-change-btn absolute bottom-3 right-3 bg-black/75 hover:bg-black text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm shadow-md" onclick="promptPhotoUrl(this)" title="Change portrait URL">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<div class="w-full max-w-xs px-2 space-y-1.5">
+<h3 class="text-lg font-bold text-slate-900 tracking-tight cursor-text" contenteditable="true" spellcheck="false">
+              Seema Nair
+            </h3>
+<p class="text-sm font-semibold text-slate-700 leading-snug cursor-text" contenteditable="true" spellcheck="false">
+              Chief Human Resources Officer
+            </p>
+<p class="text-xs text-slate-500 font-medium cursor-text" contenteditable="true" spellcheck="false">
+              People Experience &amp; Organization Strategy
+            </p>
+<div class="pt-2 flex items-center justify-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600" contenteditable="true">
+                People &amp; Culture
+              </span>
+<a class="text-slate-400 hover:text-blue-600 transition-colors p-1" href="#linkedin" title="LinkedIn Profile">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+<button class="card-delete-btn text-slate-300 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity" onclick="removeCard(this)" title="Remove Profile">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</article>
+<!-- MEMBER CARD 5 -->
+<article class="sparkle-frame-wrapper group flex flex-col items-center text-center" data-purpose="team-member-card">
+<div class="frame-container relative w-64 sm:w-72 aspect-[3/4.2] flex items-center justify-center p-3 mb-4 transition-all">
+<svg class="frame-svg absolute inset-0 w-full h-full pointer-events-none text-slate-900 frame-border-sparkle" fill="none" preserveaspectratio="none" viewbox="0 0 300 424">
+<path d="M 260,82 L 260,50 C 260,25 240,10 215,10 L 65,10 C 40,10 20,25 20,50 L 20,250" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<path d="M 20,335 L 20,374 C 20,399 40,414 65,414 L 215,414 C 240,414 260,399 260,374 L 260,165" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<g class="sparkle-accent fill-current">
+<path d="M 260,98 Q 260,108 270,108 Q 260,108 260,118 Q 260,108 250,108 Q 260,108 260,98 Z"></path>
+<path d="M 260,126 Q 260,132 266,132 Q 260,132 260,138 Q 260,132 254,132 Q 260,132 260,126 Z"></path>
+<circle cx="260" cy="120" r="2.5"></circle>
+<circle cx="260" cy="144" r="2.5"></circle>
+<circle cx="274" cy="122" r="4.2"></circle>
+<circle cx="274" cy="138" r="4.2"></circle>
+</g>
+<g class="sparkle-accent fill-current">
+<path d="M 20,300 Q 20,310 30,310 Q 20,310 20,320 Q 20,310 10,310 Q 20,310 20,300 Z"></path>
+<path d="M 20,272 Q 20,278 26,278 Q 20,278 20,284 Q 20,278 14,278 Q 20,278 20,272 Z"></path>
+<circle cx="20" cy="289" r="2.5"></circle>
+<circle cx="20" cy="265" r="2.5"></circle>
+<circle cx="6" cy="287" r="4.2"></circle>
+<circle cx="6" cy="303" r="4.2"></circle>
+</g>
+</svg>
+<div class="card-inner-content relative w-full h-full p-2.5 transition-transform duration-300">
+<div class="relative w-full h-full rounded-[30px] overflow-hidden bg-slate-100 shadow-sm border border-slate-100">
+<img alt="Hemant Badri" class="member-photo w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDTAWcrR3ArEdcL_yM3_SRU4JCvQviBJEmmkODAjldjuPxk_i8SfkEoRD8fVbNwY_YdOxTYLJZYSk29VOfmuy99m1Hsw-o3IkQN6vWHTIgg5Ab_megaaQCf93dAjEvKjOtthcyKHgV8P15EeZALH1Cr7Ti76HV-xpU22ljTI6PokbiRAd6rQcdFuF0VW0fD0X7laUHhfCb14T0R5NSNDAJPqdDThscTMFQ2BksZn0"/>
+<button class="photo-change-btn absolute bottom-3 right-3 bg-black/75 hover:bg-black text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm shadow-md" onclick="promptPhotoUrl(this)" title="Change portrait URL">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<div class="w-full max-w-xs px-2 space-y-1.5">
+<h3 class="text-lg font-bold text-slate-900 tracking-tight cursor-text" contenteditable="true" spellcheck="false">
+              Hemant Badri
+            </h3>
+<p class="text-sm font-semibold text-slate-700 leading-snug cursor-text" contenteditable="true" spellcheck="false">
+              Senior Vice President
+            </p>
+<p class="text-xs text-slate-500 font-medium cursor-text" contenteditable="true" spellcheck="false">
+              Head of Supply Chain &amp; Logistics Operations
+            </p>
+<div class="pt-2 flex items-center justify-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600" contenteditable="true">
+                Supply Chain &amp; AI
+              </span>
+<a class="text-slate-400 hover:text-blue-600 transition-colors p-1" href="#linkedin" title="LinkedIn Profile">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+<button class="card-delete-btn text-slate-300 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity" onclick="removeCard(this)" title="Remove Profile">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</article>
+<!-- MEMBER CARD 6 -->
+<article class="sparkle-frame-wrapper group flex flex-col items-center text-center" data-purpose="team-member-card">
+<div class="frame-container relative w-64 sm:w-72 aspect-[3/4.2] flex items-center justify-center p-3 mb-4 transition-all">
+<svg class="frame-svg absolute inset-0 w-full h-full pointer-events-none text-slate-900 frame-border-sparkle" fill="none" preserveaspectratio="none" viewbox="0 0 300 424">
+<path d="M 260,82 L 260,50 C 260,25 240,10 215,10 L 65,10 C 40,10 20,25 20,50 L 20,250" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<path d="M 20,335 L 20,374 C 20,399 40,414 65,414 L 215,414 C 240,414 260,399 260,374 L 260,165" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<g class="sparkle-accent fill-current">
+<path d="M 260,98 Q 260,108 270,108 Q 260,108 260,118 Q 260,108 250,108 Q 260,108 260,98 Z"></path>
+<path d="M 260,126 Q 260,132 266,132 Q 260,132 260,138 Q 260,132 254,132 Q 260,132 260,126 Z"></path>
+<circle cx="260" cy="120" r="2.5"></circle>
+<circle cx="260" cy="144" r="2.5"></circle>
+<circle cx="274" cy="122" r="4.2"></circle>
+<circle cx="274" cy="138" r="4.2"></circle>
+</g>
+<g class="sparkle-accent fill-current">
+<path d="M 20,300 Q 20,310 30,310 Q 20,310 20,320 Q 20,310 10,310 Q 20,310 20,300 Z"></path>
+<path d="M 20,272 Q 20,278 26,278 Q 20,278 20,284 Q 20,278 14,278 Q 20,278 20,272 Z"></path>
+<circle cx="20" cy="289" r="2.5"></circle>
+<circle cx="20" cy="265" r="2.5"></circle>
+<circle cx="6" cy="287" r="4.2"></circle>
+<circle cx="6" cy="303" r="4.2"></circle>
+</g>
+</svg>
+<div class="card-inner-content relative w-full h-full p-2.5 transition-transform duration-300">
+<div class="relative w-full h-full rounded-[30px] overflow-hidden bg-slate-100 shadow-sm border border-slate-100">
+<img alt="Keshav Dhakad" class="member-photo w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu1v-gjyPEf8UzOfw8xVmQfc5vT52vK0JPAW54Sk7IvT8WwhhoKbVtfso1vr2b8gHANGn5yRh_Mbb339B8Vg9R5mFqMj-3w8hopYWquZzRBIEvqZeVNBRkI0Bx3WnX2l5hivEyp-Gfhc219K5iaATPTdz9cFF5OyMJ8KdmcRHYvtpGpMa1GEmU5rrabZjIo8VVyTp9BfB3uwtEK9tTwqzHTV-kbylTcw3i7EOjMZI"/>
+<button class="photo-change-btn absolute bottom-3 right-3 bg-black/75 hover:bg-black text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm shadow-md" onclick="promptPhotoUrl(this)" title="Change portrait URL">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<div class="w-full max-w-xs px-2 space-y-1.5">
+<h3 class="text-lg font-bold text-slate-900 tracking-tight cursor-text" contenteditable="true" spellcheck="false">
+              Keshav Dhakad
+            </h3>
+<p class="text-sm font-semibold text-slate-700 leading-snug cursor-text" contenteditable="true" spellcheck="false">
+              Senior Vice President
+            </p>
+<p class="text-xs text-slate-500 font-medium cursor-text" contenteditable="true" spellcheck="false">
+              General Counsel &amp; Regulatory Strategy
+            </p>
+<div class="pt-2 flex items-center justify-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600" contenteditable="true">
+                Legal &amp; Ethics
+              </span>
+<a class="text-slate-400 hover:text-blue-600 transition-colors p-1" href="#linkedin" title="LinkedIn Profile">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+<button class="card-delete-btn text-slate-300 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity" onclick="removeCard(this)" title="Remove Profile">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- END: Executive Leadership Showcase Grid -->
+<!-- BEGIN: Component Code Integration Guide -->
+<section class="bg-slate-900 text-slate-100 rounded-3xl p-6 sm:p-10 shadow-xl">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+<div>
+<span class="text-xs uppercase font-mono tracking-widest text-amber-400">Developer Documentation</span>
+<h3 class="text-xl sm:text-2xl font-bold font-serif text-white">How to embed this Frame in your application</h3>
+</div>
+<button class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-4 py-2 rounded-xl text-xs font-mono transition-colors" onclick="copySnippetCode()">
+<svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span id="copySnippetBtnText">Copy HTML Snippet</span>
+</button>
+</div>
+<div class="relative bg-slate-950 rounded-2xl p-4 overflow-x-auto border border-slate-800 text-xs sm:text-sm font-mono text-slate-300">
+<pre><code id="codeSnippetPre">&lt;!-- AuraFrame Name Frame Component --&gt;
+&lt;div class="relative w-64 aspect-[3/4.2] flex items-center justify-center p-3"&gt;
+  &lt;svg class="absolute inset-0 w-full h-full pointer-events-none text-slate-900" viewBox="0 0 300 424" fill="none"&gt;
+    &lt;path d="M 260,82 L 260,50 C 260,25 240,10 215,10 L 65,10 C 40,10 20,25 20,50 L 20,250" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/&gt;
+    &lt;path d="M 20,335 L 20,374 C 20,399 40,414 65,414 L 215,414 C 240,414 260,399 260,374 L 260,165" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/&gt;
+    &lt;g class="fill-current"&gt;
+      &lt;path d="M 260,98 Q 260,108 270,108 Q 260,108 260,118 Q 260,108 250,108 Q 260,108 260,98 Z" /&gt;
+      &lt;path d="M 260,126 Q 260,132 266,132 Q 260,132 260,138 Q 260,132 254,132 Q 260,132 260,126 Z" /&gt;
+      &lt;circle cx="260" cy="120" r="2.5" /&gt;&lt;circle cx="260" cy="144" r="2.5" /&gt;&lt;circle cx="274" cy="122" r="4.2" /&gt;&lt;circle cx="274" cy="138" r="4.2" /&gt;
+    &lt;/g&gt;
+    &lt;g class="fill-current"&gt;
+      &lt;path d="M 20,300 Q 20,310 30,310 Q 20,310 20,320 Q 20,310 10,310 Q 20,310 20,300 Z" /&gt;
+      &lt;path d="M 20,272 Q 20,278 26,278 Q 20,278 20,284 Q 20,278 14,278 Q 20,278 20,272 Z" /&gt;
+      &lt;circle cx="20" cy="289" r="2.5" /&gt;&lt;circle cx="20" cy="265" r="2.5" /&gt;&lt;circle cx="6" cy="287" r="4.2" /&gt;&lt;circle cx="6" cy="303" r="4.2" /&gt;
+    &lt;/g&gt;
+  &lt;/svg&gt;
+  &lt;div class="w-full h-full p-2.5"&gt;
+    &lt;img src="avatar.jpg" class="w-full h-full object-cover rounded-[30px]" alt="Portrait"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</section>
+<!-- END: Component Code Integration Guide -->
+</main>
+<!-- END: Main Page Content -->
+<!-- BEGIN: Page Footer -->
+<footer class="border-t border-slate-200 mt-20 bg-white py-12 text-center text-xs text-slate-500">
+<div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span class="font-medium text-slate-700">AuraFrame Name Frame Specification</span>
+</div>
+<p>Precision SVG geometry replicated from reference https://lh3.googleusercontent.com/aida-public/AB6AXuAL5zkd6l6ozwHcKV9QLhb3SaaNy8qljZ4yN0GV7gyaLmKwzsCZeTZK0KqLPzxeNXYGV2EyIcWMN1pq8IsuX7q_Ij8L3RBj7YNKPZb8UVn9iWRDcRHnp67lpgTRbROnzZcOu81nkH6kL_LvdYZnF9Q9CVXSnMrflcKD9oIQFerveWob_AP3BTDoEnji4lNZ4KKsNbfEdlWU-5WH-KnxHckl4guhLPwSpej3QktysqKR3W1jvsh_gBst. Styled with executive portraits inspired by https://lh3.googleusercontent.com/aida-public/AB6AXuAOcF1OJ_BtHMUaEp3xnrRRnb3BPM1AK2Yafl9SvJ0KcYYGHF_k8zOgwxet6H2BzU4vV5R3pstLObo6oeizCFOffeypUGq0EnQy1K8eoVst-Ff4vWh_oSI2C69zLNcX_loc3IZRhYy-VK73EaZBChVOvXXn6z1mnNVgtJ5i9GhKlBTFbgJQk9-hX6XfjB56dSav57JEiV8-qID-F6OKlpGAmcPOd9BQlw57m5qLJLBPtBUEsiwQ18Ru.</p>
+</div>
+</footer>
+<!-- END: Page Footer -->
+<!-- BEGIN: Interactive Logic Scripts -->
+<script data-purpose="card-state-manager">
+    // Track Edit Mode toggle state
+    let isEditMode = true;
+    const toggleEditBtn = document.getElementById('toggleEditModeBtn');
+    const editModeStateText = document.getElementById('editModeStateText');
+
+    toggleEditBtn.addEventListener('click', () => {
+      isEditMode = !isEditMode;
+      const editables = document.querySelectorAll('[contenteditable]');
+      const photoBtns = document.querySelectorAll('.photo-change-btn, .card-delete-btn');
+
+      if (isEditMode) {
+        editables.forEach(el => el.setAttribute('contenteditable', 'true'));
+        editModeStateText.textContent = 'ACTIVE';
+        toggleEditBtn.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors shadow-sm';
+        photoBtns.forEach(btn => btn.style.display = '');
+      } else {
+        editables.forEach(el => el.setAttribute('contenteditable', 'false'));
+        editModeStateText.textContent = 'DISABLED';
+        toggleEditBtn.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-colors shadow-sm';
+        photoBtns.forEach(btn => btn.style.display = 'none');
+      }
+    });
+
+    // Helper: Change photo URL on click
+    function promptPhotoUrl(button) {
+      const card = button.closest('[data-purpose="team-member-card"]');
+      const img = card.querySelector('.member-photo');
+      const newUrl = prompt('Enter a new portrait image URL or Unsplash address:', img.src);
+      if (newUrl && newUrl.trim() !== '') {
+        img.src = newUrl.trim();
+      }
+    }
+
+    // Helper: Remove Card
+    function removeCard(button) {
+      const card = button.closest('[data-purpose="team-member-card"]');
+      if (confirm('Are you sure you want to remove this member profile?')) {
+        card.remove();
+        updateMemberBadge();
+      }
+    }
+
+    // Helper: Update Member Count badge
+    function updateMemberBadge() {
+      const count = document.querySelectorAll('#teamGridContainer [data-purpose="team-member-card"]').length;
+      document.getElementById('memberCountBadge').textContent = `${count} Member${count !== 1 ? 's' : ''}`;
+    }
+
+    // Helper: Add New Member Card Dynamically
+    function addNewMemberCard() {
+      const grid = document.getElementById('teamGridContainer');
+      const existing = grid.querySelector('[data-purpose="team-member-card"]');
+      if (!existing) return;
+
+      const clone = existing.cloneNode(true);
+      
+      // Assign fresh generic placeholder data
+      const name = clone.querySelector('h3');
+      const role = clone.querySelectorAll('p')[0];
+      const dept = clone.querySelectorAll('p')[1];
+      const img = clone.querySelector('.member-photo');
+
+      if (name) name.textContent = 'New Executive Member';
+      if (role) role.textContent = 'Vice President of Innovation';
+      if (dept) dept.textContent = 'Strategy & Technology Operations';
+      if (img) img.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80';
+
+      grid.appendChild(clone);
+      updateMemberBadge();
+
+      // Scroll into view
+      clone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Border Theme Controls
+    function setGlobalFrameTheme(theme) {
+      const svgs = document.querySelectorAll('.frame-svg');
+      const btnSparkle = document.getElementById('btn-theme-sparkle');
+      const btnGlow = document.getElementById('btn-theme-glowing');
+      const btnMinimal = document.getElementById('btn-theme-minimal');
+
+      // Reset button styles
+      [btnSparkle, btnGlow, btnMinimal].forEach(b => {
+        b.className = 'px-3 py-1.5 rounded-lg hover:bg-slate-100 text-slate-700 transition-all';
+      });
+
+      svgs.forEach(svg => {
+        svg.classList.remove('frame-border-sparkle', 'frame-border-minimal', 'frame-border-glowing');
+        svg.style.color = '';
+
+        if (theme === 'sparkle') {
+          svg.classList.add('frame-border-sparkle');
+          btnSparkle.className = 'px-3 py-1.5 rounded-lg bg-slate-900 text-white transition-all';
+        } else if (theme === 'glowing') {
+          svg.classList.add('frame-border-glowing');
+          svg.style.color = '#D97706'; // Gold Accent
+          btnGlow.className = 'px-3 py-1.5 rounded-lg bg-amber-600 text-white transition-all';
+        } else if (theme === 'minimal') {
+          svg.classList.add('frame-border-minimal');
+          btnMinimal.className = 'px-3 py-1.5 rounded-lg bg-slate-900 text-white transition-all';
+        }
+      });
+    }
+
+    // Size Scale Controls
+    function setGlobalFrameScale(size) {
+      const containers = document.querySelectorAll('.frame-container');
+      const btnStandard = document.getElementById('btn-size-standard');
+      const btnCompact = document.getElementById('btn-size-compact');
+
+      [btnStandard, btnCompact].forEach(b => {
+        b.className = 'px-3 py-1.5 rounded-lg hover:bg-slate-100 text-slate-700 transition-all';
+      });
+
+      containers.forEach(container => {
+        if (size === 'compact') {
+          container.className = 'frame-container relative w-52 aspect-[3/4.2] flex items-center justify-center p-2 mb-3 transition-all';
+          btnCompact.className = 'px-3 py-1.5 rounded-lg bg-slate-900 text-white transition-all';
+        } else {
+          container.className = 'frame-container relative w-64 sm:w-72 aspect-[3/4.2] flex items-center justify-center p-3 mb-4 transition-all';
+          btnStandard.className = 'px-3 py-1.5 rounded-lg bg-slate-900 text-white transition-all';
+        }
+      });
+    }
+
+    // Reset function
+    function resetCardsToDefault() {
+      if (confirm('Reset page to initial profiles?')) {
+        window.location.reload();
+      }
+    }
+
+    // Clipboard Helpers
+    function copySvgCode() {
+      const snippet = `<svg viewBox="0 0 300 424" fill="none"><path d="M 260,82 L 260,50 C 260,25 240,10 215,10 L 65,10 C 40,10 20,25 20,50 L 20,250" stroke="#111827" stroke-width="2.5" stroke-linecap="round"/><path d="M 20,335 L 20,374 C 20,399 40,414 65,414 L 215,414 C 240,414 260,399 260,374 L 260,165" stroke="#111827" stroke-width="2.5" stroke-linecap="round"/><g fill="#111827"><path d="M 260,98 Q 260,108 270,108 Q 260,108 260,118 Q 260,108 250,108 Q 260,108 260,98 Z"/><circle cx="260" cy="120" r="2.5"/><path d="M 260,126 Q 260,132 266,132 Q 260,132 260,138 Q 260,132 254,132 Q 260,132 260,126 Z"/><circle cx="260" cy="144" r="2.5"/><circle cx="274" cy="122" r="4.2"/><circle cx="274" cy="138" r="4.2"/></g><g fill="#111827"><path d="M 20,300 Q 20,310 30,310 Q 20,310 20,320 Q 20,310 10,310 Q 20,310 20,300 Z"/><circle cx="20" cy="289" r="2.5"/><path d="M 20,272 Q 20,278 26,278 Q 20,278 20,284 Q 20,278 14,278 Q 20,278 20,272 Z"/><circle cx="20" cy="265" r="2.5"/><circle cx="6" cy="287" r="4.2"/><circle cx="6" cy="303" r="4.2"/></g></svg>`;
+      navigator.clipboard.writeText(snippet);
+      alert('SVG Frame Markup copied to clipboard!');
+    }
+
+    function copySnippetCode() {
+      const code = document.getElementById('codeSnippetPre').innerText;
+      navigator.clipboard.writeText(code);
+      const btn = document.getElementById('copySnippetBtnText');
+      btn.textContent = 'Copied to Clipboard!';
+      setTimeout(() => { btn.textContent = 'Copy HTML Snippet'; }, 2000);
+    }
+  </script>
+<!-- END: Interactive Logic Scripts -->
+</body></html>

@@ -12,7 +12,7 @@ export function Chatbox() {
     setIsSubmitting(true);
     setStatus(null);
     try {
-      await fetch('https://n8n.laiqa.ai/webhook/advice', {
+      await fetch('https://n8n-latest-abr9.onrender.com/webhook/chat-knp-to-tele', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

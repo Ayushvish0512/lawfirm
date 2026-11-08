@@ -9,6 +9,7 @@ import { About } from './pages/About';
 import { Services } from './pages/Services';
 import { Contact } from './pages/Contact';
 import { BookConsultation } from './pages/BookConsultation';
+import { Team } from './pages/Team';
 import './styles/index.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/services2" element={<Services />} />
         <Route path="/contact2" element={<Contact />} />
         <Route path="/book-consultation" element={<BookConsultation />} />
+        <Route path="/team" element={<Team />} />
 
         {/* Public Routes (Maintenance Mode) */}
         <Route path="/" element={<Maintenance />} />

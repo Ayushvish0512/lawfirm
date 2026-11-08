@@ -1,0 +1,34 @@
+[
+  {
+    "id": "lawyer-1",
+    "name": "Aditi Sharma",
+    "specialty": "Corporate Law",
+    "experience": "12+ years",
+    "image": "/unnamed.jpg",
+    "bio": "Expert in corporate governance, mergers & acquisitions, and contract law with a focus on business compliance."
+  },
+  {
+    "id": "lawyer-2",
+    "name": "Rajiv Mehta",
+    "specialty": "Civil Litigation",
+    "experience": "15+ years",
+    "image": "/lawyer-1.jpg",
+    "bio": "Seasoned litigator specializing in civil disputes, property matters, and commercial disagreements."
+  },
+  {
+    "id": "lawyer-3",
+    "name": "Priya Desai",
+    "specialty": "Family Law",
+    "experience": "10+ years",
+    "image": "/lawyer-2.jpg",
+    "bio": "Compassionate family law attorney handling matrimonial matters, custody, and domestic legal issues."
+  },
+  {
+    "id": "lawyer-4",
+    "name": "Karan Verma",
+    "specialty": "Real Estate Law",
+    "experience": "14+ years",
+    "image": "/unnamed.jpg",
+    "bio": "Real estate specialist with extensive experience in property transactions, land disputes, and conveyancing."
+  }
+]
